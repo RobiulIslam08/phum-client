@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import MainLayout from "./components/layout/MainLayout"
+
 
 
 function App() {
@@ -6,7 +7,8 @@ function App() {
 
   return (
  <>
- <h1>ph university</h1>
+
+ <MainLayout></MainLayout>
  </>
   )
 }
