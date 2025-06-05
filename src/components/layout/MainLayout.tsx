@@ -1,39 +1,40 @@
-import { Layout, Menu, MenuProps } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import {  Outlet } from "react-router-dom";
+import { adminSidebarItems } from "../../routes/admin.routes";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const MainLayout = () => {
-  const items: MenuProps["items"] = [
-    {
-      key: "Dashboard",
-      label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
-    },
+//   const items: MenuProps["items"] = [
+//     {
+//       key: "Dashboard",
+//       label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
+//     },
 
-    {
-      key: "User Management",
-      label: "User Management",
-      children: [
-        {
-          key: " Create Admin",
-          label: <NavLink to="create-admin">Admin Create</NavLink>,
-        },
-        {
-          key: " Create Student",
-          label: <NavLink to="create-student">Create Student</NavLink>,
-        },
-        {
-          key: " Create Faculty",
-          label: <NavLink to="create-faculty">Create Faculty</NavLink>,
-        },
+//     {
+//       key: "User Management",
+//       label: "User Management",
+//       children: [
+//         {
+//           key: " Create Admin",
+//           label: <NavLink to="create-admin">Admin Create</NavLink>,
+//         },
+//         {
+//           key: " Create Student",
+//           label: <NavLink to="create-student">Create Student</NavLink>,
+//         },
+//         {
+//           key: " Create Faculty",
+//           label: <NavLink to="create-faculty">Create Faculty</NavLink>,
+//         },
       
-      ],
-    },
-    {
-      key: "4",
-      label: "Setting",
-    },
-  ];
+//       ],
+//     },
+//     {
+//       key: "4",
+//       label: "Setting",
+//     },
+//   ];
 
   return (
     <div>
@@ -65,7 +66,7 @@ const MainLayout = () => {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={["4"]}
-            items={items}
+            items={adminSidebarItems}
           />
         </Sider>
         <Layout style={{ height: "100vh" }}>
