@@ -1,7 +1,7 @@
 import OfferedCourse from "../pages/student/OfferedCourse";
 import StudentDashboard from "../pages/student/StudentDashboard";
 
-export const studentPatch = [
+export const studentPaths = [
 	{
 		name:'Dashboard',
 		path:'dashboard',
