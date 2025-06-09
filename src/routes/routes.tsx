@@ -8,6 +8,7 @@ import { studentPaths } from "./student.routes";
 import { facultyPaths } from "./faculty.routes";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <App></App>,
+    element: <ProtectedRoute><App></App></ProtectedRoute>,
     children: routeGenerator(adminPaths),
   },
   {
