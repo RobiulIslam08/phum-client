@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Row } from "antd";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/api/authApi";
 import { useAppDispatch } from "../redux/hooks";
@@ -46,19 +46,19 @@ const Login = () => {
     // }
   };
   return (
-    <div>
-      Login page
+    <Row justify={"center"} align={"middle"} style={{height:'100vh'}} >
+    
       <PHFrom onSubmit={onSubmit}>
-        <div>
+
+
           <PHInput type="id" name="id" label="Id" />
-        </div>
-        <div>
+    
           <PHInput type="password" name="password" label="Password" />
-        </div>
+   
 
         <Button htmlType="submit">Submit</Button>
       </PHFrom>
-    </div>
+    </Row>
   );
 };
 
