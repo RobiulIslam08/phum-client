@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Form } from "antd";
 import { ReactNode } from "react";
 import {  FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 type TFormProps = {
@@ -16,7 +17,7 @@ const PHFrom = ({ onSubmit, children, defaultValues }: TFormProps) => {
   const method = useForm(formConfig);
   return (
     <FormProvider {...method}>
-      <form onSubmit={method.handleSubmit(onSubmit)}>{children}</form>
+      <Form layout="vertical" onFinish={method.handleSubmit(onSubmit)}>{children}</Form>
     </FormProvider>
   );
 };
