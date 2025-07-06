@@ -32,7 +32,12 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
   console.log(result);
   if (result?.error?.status === 404){
-    toast('User not found')
+     console.error("404 Error details:", result.error)
+    toast.error(result.error.data.message)
+  }
+  if (result?.error?.status === 500){
+     console.error("404 Error details:", result.error)
+    toast.error(result.error.data.message)
   }
    if (result?.error?.status === 403) {
     toast.error("Access denied. Please check your credentials or permissions.");
