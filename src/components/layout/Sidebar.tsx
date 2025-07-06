@@ -6,62 +6,63 @@ import { studentPaths } from "../../routes/student.routes";
 import { useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 
-const {  Sider } = Layout;
+const { Sider } = Layout;
 const userRole = {
-		ADMIN:'admin',
-		FACULTY:'faculty',
-		STUDENT:'student'
-	}
+  ADMIN: "admin",
+  FACULTY: "faculty",
+  STUDENT: "student",
+};
 const Sidebar = () => {
-const user = useAppSelector(selectCurrentUser)
-	let sidebarItems;
-	
-	switch (user!.role) {
-		case userRole.ADMIN:
-			 sidebarItems = sidebarItemsGenerator(adminPaths,userRole.ADMIN)
-			break;
-		case userRole.FACULTY:
-			 sidebarItems = sidebarItemsGenerator(facultyPaths,userRole.FACULTY)
-			break;
-		case userRole.STUDENT:
-			 sidebarItems = sidebarItemsGenerator(studentPaths,userRole.STUDENT)
-			break;
-		
-		default:
-			break;
-	}
-	return (
-		   <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
+  const user = useAppSelector(selectCurrentUser);
+  let sidebarItems;
+
+  switch (user!.role) {
+    case userRole.ADMIN:
+      sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
+      break;
+    case userRole.FACULTY:
+      sidebarItems = sidebarItemsGenerator(facultyPaths, userRole.FACULTY);
+      break;
+    case userRole.STUDENT:
+      sidebarItems = sidebarItemsGenerator(studentPaths, userRole.STUDENT);
+      break;
+
+    default:
+      break;
+  }
+  return (
+    <Sider
+      breakpoint="lg"
+      collapsedWidth="0"
+      style={{ height: "200vh", position: "sticky", top: "0", left: "0" }}
+      onBreakpoint={(broken) => {
+        console.log(broken);
+      }}
+      onCollapse={(collapsed, type) => {
+        console.log(collapsed, type);
+      }}
+    >
+      <div>
+        <h1
+          style={{
+            height: "50px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
           }}
         >
-          <div>
-            <h1
-              style={{
-                height: "50px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "white",
-              }}
-            >
-              Ph University
-            </h1>
-          </div>
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={["4"]}
-            items={sidebarItems}
-          />
-        </Sider>
-	);
+          Ph University
+        </h1>
+      </div>
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultSelectedKeys={["4"]}
+        items={sidebarItems}
+      />
+    </Sider>
+  );
 };
 
 export default Sidebar;

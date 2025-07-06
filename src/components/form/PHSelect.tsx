@@ -16,7 +16,7 @@ const PHSelect = ({ label, name,options }: TPHSelectProp) => {
           <Select
             style={{ width: "100%" }}
             {...field}
-            options={options}
+            options={options} size="large"
           />
         </Form.Item>
       )}
