@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
   BaseQueryApi,
@@ -9,6 +10,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
+import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api/v1",
@@ -29,6 +31,12 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
   console.log(result);
+  if (result?.error?.status === 404){
+    toast('User not found')
+  }
+   if (result?.error?.status === 403) {
+    toast.error("Access denied. Please check your credentials or permissions.");
+  }
   if (result?.error?.status === 401) {
     // send refresh
     console.log("sending refresh token");
