@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Col, Flex } from "antd";
 import PHFrom from "../../../components/form/PHFrom";
 import PHInput from "../../../components/form/PHInput";
@@ -29,7 +30,7 @@ const CreateAcademicSemester = () => {
       endMonth: data.endMonth,
     };
     try {
-      const res = await addAcademicSemster(semesterData) as TResponse;
+      const res = await addAcademicSemster(semesterData) ;
       console.log(res);
       if (res.error) {
         toast.error(res.error.data.message);
