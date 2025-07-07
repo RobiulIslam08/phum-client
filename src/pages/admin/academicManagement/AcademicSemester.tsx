@@ -2,6 +2,7 @@ import { Table } from "antd";
 import { useGetAllSemesterQuery } from "../../../redux/features/admin/academicManagement.api";
 import type { TableColumnsType, TableProps } from 'antd';
 import { TAcademicSemester } from "../../../types/academicManagement.type";
+import { useState } from "react";
 type TTableData = Pick<TAcademicSemester, '_id'| 'name'| 'year' | 'startMonth' | 'endMonth'>
 const columns: TableColumnsType<TTableData> = [
   {
@@ -10,12 +11,16 @@ const columns: TableColumnsType<TTableData> = [
     showSorterTooltip: { target: 'full-header' },
     filters: [
       {
-        text: 'Joe',
-        value: 'Joe',
+        text: 'Autumn',
+        value: 'Autumn',
       },
       {
-        text: 'Jim',
-        value: 'Jim',
+        text: 'Summer',
+        value: 'Summer',
+      },
+      {
+       text: 'Fall',
+        value: 'Fall',
       },
       {
         text: 'Submenu',
@@ -39,6 +44,35 @@ const columns: TableColumnsType<TTableData> = [
   {
     title: 'Year',
     dataIndex: 'year',
+     filters: [
+      {
+        text: '2025',
+        value: '2025',
+      },
+      {
+        text: '2026',
+        value: '2026',
+      },
+      {
+       text: '2027',
+        value: '2027',
+      },
+      {
+        text: 'Submenu',
+        value: 'Submenu',
+        children: [
+          {
+            text: 'Green',
+            value: 'Green',
+          },
+          {
+            text: 'Black',
+            value: 'Black',
+          },
+        ],
+      },
+    ],
+    
   
   },
   {
@@ -82,16 +116,29 @@ const columns: TableColumnsType<TTableData> = [
 
 
 const AcademicSemester = () => {
-	const {data:semesterData} = useGetAllSemesterQuery([{name:'year', value:'2025'}]) 
+  const [params, setParams] = useState([])
+	const {data:semesterData} = useGetAllSemesterQuery(params) 
   const tableData = semesterData?.data?.map(({_id,year, name, startMonth, endMonth}) => ({
-    _id,year, name, startMonth, endMonth
+    key:_id,year, name, startMonth, endMonth
   }))
-	
+	const onChange: TableProps<TTableData>['onChange'] = (pagintion, filters, sorter, extra) => {
+  console.log('params',  filters,  extra);
+  if(extra.action === 'filter'){
+    const queryParams = []
+    filters.name?.forEach((item) => 
+      queryParams.push({name:'name', value:item})
+    )
+    filters.year?.forEach((item) => 
+      queryParams.push({name:'year', value:item})
+    )
+    setParams(queryParams)
+  }
+};
 	return (
 		<Table<TTableData>
     columns={columns}
     dataSource={tableData}
-
+ onChange={onChange}
     showSorterTooltip={{ target: 'sorter-icon' }}
   />
 	);
