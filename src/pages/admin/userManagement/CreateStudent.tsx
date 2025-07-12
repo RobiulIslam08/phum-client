@@ -4,58 +4,83 @@ import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
+import {
+  bloodGroupOptions,
+  genderOptions,
+} from "../../../constants/global.constant";
+
+import PHDatePicker from "../../../components/form/PHDatePicker";
+import { useGetAcademicDepartmentsQuery, useGetAllSemesterQuery } from "../../../redux/features/admin/academicManagement.api";
 
 const studentDummyData = {
-  password: 'student123',
+  password: "student123",
   student: {
     name: {
-      firstName: 'I am ',
-      middleName: 'Student',
-      lastName: 'Number 1',
+      firstName: "I am ",
+      middleName: "Student",
+      lastName: "Number 1",
     },
-    gender: 'male',
-    dateOfBirth: '1990-01-01',
-    bloogGroup: 'A+',
+    gender: "male",
+    dateOfBirth: "1990-01-01",
+    bloogGroup: "A+",
 
-    email: 'student3@gmail.com',
-    contactNo: '1235678',
-    emergencyContactNo: '987-654-3210',
-    presentAddress: '123 Main St, Cityville',
-    permanentAddress: '456 Oak St, Townsville',
+    email: "student3@gmail.com",
+    contactNo: "1235678",
+    emergencyContactNo: "987-654-3210",
+    presentAddress: "123 Main St, Cityville",
+    permanentAddress: "456 Oak St, Townsville",
 
     guardian: {
-      fatherName: 'James Doe',
-      fatherOccupation: 'Engineer',
-      fatherContactNo: '111-222-3333',
-      motherName: 'Mary Doe',
-      motherOccupation: 'Teacher',
-      motherContactNo: '444-555-6666',
+      fatherName: "James Doe",
+      fatherOccupation: "Engineer",
+      fatherContactNo: "111-222-3333",
+      motherName: "Mary Doe",
+      motherOccupation: "Teacher",
+      motherContactNo: "444-555-6666",
     },
 
     localGuardian: {
-      name: 'Alice Johnson',
-      occupation: 'Doctor',
-      contactNo: '777-888-9999',
-      address: '789 Pine St, Villageton',
+      name: "Alice Johnson",
+      occupation: "Doctor",
+      contactNo: "777-888-9999",
+      address: "789 Pine St, Villageton",
     },
 
-    admissionSemester: '65bb60ebf71fdd1add63b1c0',
-    academicDepartment: '65b4acae3dc8d4f3ad83e416',
+    admissionSemester: "65bb60ebf71fdd1add63b1c0",
+    academicDepartment: "65b4acae3dc8d4f3ad83e416",
   },
 };
 
 const CreateStudent = () => {
   const [addStudent, { data, error }] = useAddStudentMutation();
-   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  console.log({ data, error });
+
+  const { data: sData, isLoading: sIsLoading } =
+    useGetAllSemesterQuery(undefined);
+  console.log(sData);
+
+  const { data: dData, isLoading: dIsLoading } =
+    useGetAcademicDepartmentsQuery(undefined,{skip:sIsLoading});
+
+  const semesterOptions = sData?.data?.map((item) => ({
+    value: item._id,
+    label: `${item.name} ${item.year}`,
+  }));
+
+  const departmentOptions = dData?.data?.map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const studentData = {
-      password: 'student123',
+      password: "student123",
       student: data,
     };
 
     const formData = new FormData();
 
-    formData.append('data', JSON.stringify(studentData));
-    formData.append('file', data.image);
+    formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data.image);
 
     addStudent(formData);
 
@@ -63,11 +88,48 @@ const CreateStudent = () => {
     //! Just for checking
     console.log(Object.fromEntries(formData));
   };
+  //! This is only for development
+  //! Should be removed
+  const studentDefaultValues = {
+    name: {
+      firstName: "I am ",
+      middleName: "Student",
+      lastName: "Number",
+    },
+    gender: "male",
 
-	return (
-		 <Row justify="center">
+    bloogGroup: "A+",
+
+    contactNo: "1235678",
+    emergencyContactNo: "987-654-3210",
+    presentAddress: "123 Main St, Cityville",
+    permanentAddres: "456 Oak St, Townsville",
+    email: "robi@gmail.com",
+
+    guardian: {
+      fatherName: "James Doe",
+      fatherOccupation: "Engineer",
+      fatherContactNo: "111-222-3333",
+      motherName: "Mary Doe",
+      motherOccupation: "Teacher",
+      motherContactNo: "444-555-6666",
+    },
+
+    localGuardian: {
+      name: "Alice Johnson",
+      occupation: "Doctor",
+      contactNo: "777-888-9999",
+      address: "789 Pine St, Villageton",
+    },
+
+    admissionSemester: "68542728f3cdbbfcca2f27ef",
+    academicDepartment: "68541aa039e15627a05000d2",
+  };
+
+  return (
+    <Row justify="center">
       <Col span={24}>
-        <PHForm onSubmit={onSubmit} >
+        <PHForm onSubmit={onSubmit} defaultValues={studentDefaultValues}>
           <Divider>Personal Info.</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -79,22 +141,21 @@ const CreateStudent = () => {
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHInput type="text" name="name.lastName" label="Last Name" />
             </Col>
-            {/* <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHSelect options={genderOptions} name="gender" label="Gender" />
-            </Col> */}
-            {/* <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHDatePicker name="dateOfBirth" label="Date of birth" />
-            </Col> */}
-            {/* <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHSelect
                 options={bloodGroupOptions}
                 name="bloogGroup"
                 label="Blood group"
               />
-            </Col> */}
+            </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <Controller
-
                 name="image"
                 render={({ field: { onChange, value, ...field } }) => (
                   <Form.Item label="Picture">
@@ -134,7 +195,7 @@ const CreateStudent = () => {
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHInput
                 type="text"
-                name="permanentAddress"
+                name="permanentAddres"
                 label="Permanent Address"
               />
             </Col>
@@ -212,7 +273,7 @@ const CreateStudent = () => {
             </Col>
           </Row>
           <Divider>Academic Info.</Divider>
-          {/* <Row gutter={8}>
+          <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHSelect
                 options={semesterOptions}
@@ -229,13 +290,13 @@ const CreateStudent = () => {
                 label="Admission Department"
               />
             </Col>
-          </Row> */}
+          </Row>
 
           <Button htmlType="submit">Submit</Button>
         </PHForm>
       </Col>
     </Row>
-	);
+  );
 };
 
 export default CreateStudent;

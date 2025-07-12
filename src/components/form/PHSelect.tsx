@@ -4,10 +4,11 @@ import { Controller } from "react-hook-form";
 type TPHSelectProp = {
   label: string;
   name: string;
-  options: { value: string; label: string; disabled?: boolean }[];
+  options: { value: string; label: string; disabled?: boolean }[] | undefined;
+  disabled?:boolean
 };
 
-const PHSelect = ({ label, name,options }: TPHSelectProp) => {
+const PHSelect = ({ label, name,options ,disabled}: TPHSelectProp) => {
   return (
     <Controller
       name={name}
