@@ -27,6 +27,7 @@ const StudentData = () => {
     isFetching,
   } = useGetAllStudentsQuery([
     { name: 'page', value: page },
+    { name: 'limit', value: 3 },
     { name: 'sort', value: 'id' },
     ...params,
   ]);
