@@ -1,3 +1,5 @@
+import { TQueryParams, TResponseRedux } from '../../../types/global.type';
+import { TStudent } from '../../../types/userManagement.type';
 import { baseApi } from '../../api/baseApi';
 
 const userManagementApi = baseApi.injectEndpoints({
@@ -8,7 +10,7 @@ const userManagementApi = baseApi.injectEndpoints({
         const params = new URLSearchParams();
 
         if (args) {
-          args.forEach((item: TQueryParam) => {
+          args.forEach((item: TQueryParams) => {
             params.append(item.name, item.value as string);
           });
         }

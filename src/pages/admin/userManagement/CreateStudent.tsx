@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import PHForm from "../../../components/form/PHFrom";
 import PHInput from "../../../components/form/PHInput";
@@ -57,7 +58,7 @@ const CreateStudent = () => {
 
   const { data: sData, isLoading: sIsLoading } =
     useGetAllSemesterQuery(undefined);
-  console.log(sData);
+  // console.log(sData);
 
   const { data: dData, isLoading: dIsLoading } =
     useGetAcademicDepartmentsQuery(undefined,{skip:sIsLoading});
@@ -77,10 +78,13 @@ const CreateStudent = () => {
       student: data,
     };
 
+    const file = data.image;
+    // 👇 The image property is removed from the data object
+    delete data.image;
     const formData = new FormData();
 
     formData.append("data", JSON.stringify(studentData));
-    formData.append("file", data.image);
+    formData.append("file", file);
 
     addStudent(formData);
 
@@ -104,7 +108,7 @@ const CreateStudent = () => {
     emergencyContactNo: "987-654-3210",
     presentAddress: "123 Main St, Cityville",
     permanentAddres: "456 Oak St, Townsville",
-    email: "robi@gmail.com",
+   
 
     guardian: {
       fatherName: "James Doe",

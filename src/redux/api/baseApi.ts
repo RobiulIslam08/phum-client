@@ -33,11 +33,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   console.log(result);
   if (result?.error?.status === 404){
      console.error("404 Error details:", result.error)
-    toast.error(result.error.data.message)
+    toast.error((result?.error?.data as { message?: string })?.message || "An error occurred")
   }
   if (result?.error?.status === 500){
      console.error("404 Error details:", result.error)
-    toast.error(result.error.data.message)
+    toast.error((result?.error?.data as { message?: string })?.message || "An error occurred")
   }
    if (result?.error?.status === 403) {
     toast.error("Access denied. Please check your credentials or permissions.");
