@@ -1,4 +1,4 @@
-import { TAcademicDepartment, TAcademicSemester } from "../../../types/academicManagement.type";
+import { TAcademicDepartment, TAcademicFaculty, TAcademicSemester } from "../../../types/academicManagement.type";
 import { TQueryParams, TResponseRedux } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
 
@@ -26,6 +26,24 @@ const academicManagementApi = baseApi.injectEndpoints({
         };
       },
     }),
+     getAcademicFaculties: builder.query({
+      query: () => {
+        return { url: '/academic-faculties', method: 'GET' };
+      },
+      transformResponse: (response: TResponseRedux<TAcademicFaculty[]>) => {
+        return {
+          data: response.data,
+          meta: response.meta,
+        };
+      },
+    }),
+    addAcademicFaculty: builder.mutation({
+      query: (data) => ({
+        url: '/academic-faculties/create-academic-faculty',
+        method: 'POST',
+        body: data,
+      }),
+    }),
      getAcademicDepartments: builder.query({
       query: () => {
         return { url: '/academic-department', method: 'GET' };
@@ -46,5 +64,5 @@ const academicManagementApi = baseApi.injectEndpoints({
     }),
   }),
 });
-export const { useGetAllSemesterQuery, useAddAcademicSemesterMutation,useGetAcademicDepartmentsQuery } =
+export const { useGetAllSemesterQuery, useAddAcademicSemesterMutation,useGetAcademicDepartmentsQuery, useGetAcademicFacultiesQuery,useAddAcademicFacultyMutation } =
   academicManagementApi;
