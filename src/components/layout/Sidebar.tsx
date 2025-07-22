@@ -4,7 +4,8 @@ import { adminPaths } from "../../routes/admin.routes";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { studentPaths } from "../../routes/student.routes";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { selectCurrentUser, useCurrentToken } from "../../redux/features/auth/authSlice";
+import { verifyToken } from "../../utils/verifyToken";
 
 const { Sider } = Layout;
 const userRole = {
@@ -12,8 +13,18 @@ const userRole = {
   FACULTY: "faculty",
   STUDENT: "student",
 };
+type JwtPayloadWithRole = {
+  role?: string;
+  [key: string]: any;
+};
 const Sidebar = () => {
-  const user = useAppSelector(selectCurrentUser);
+ const token = useAppSelector(useCurrentToken);
+
+  let user: JwtPayloadWithRole | undefined;
+
+  if (token) {
+    user = verifyToken(token) as JwtPayloadWithRole;
+  }
   let sidebarItems;
 
   switch (user!.role) {
