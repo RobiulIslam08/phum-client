@@ -40,7 +40,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     toast.error((result?.error?.data as { message?: string })?.message || "An error occurred")
   }
    if (result?.error?.status === 403) {
-    toast.error("Access denied. Please check your credentials or permissions.");
+    toast.error((result?.error?.data as { message?: string })?.message || "Access denied. Please check your credentials or permissions.");
   }
   if (result?.error?.status === 401) {
     // send refresh
