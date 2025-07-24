@@ -11,7 +11,7 @@ type TCourse = {
 const OfferedCourse = () => {
   const { data: offeredCourseData } = useGetAllOfferedCoursesQuery(undefined);
   const [enroll] = useEnrolCourseMutation();
-  console.log(offeredCourseData)
+  
 
   const singleObject = offeredCourseData?.data?.reduce((acc: TCourse, item) => {
     const key = item.course.title;
