@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Col, Row } from 'antd';
 import {
   useEnrolCourseMutation,
@@ -38,7 +39,7 @@ const OfferedCourse = () => {
   };
 
   if (!modifiedData.length) {
-    return <p>No available courses</p>;
+    return <p>No available courses because not ongoing course now. admin when ongoing course you show this course</p>;
   }
 
   return (
