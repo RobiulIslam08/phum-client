@@ -22,11 +22,11 @@ const Login = () => {
 
     //  const  defaultValues = {
     //   id: "A-0001",
-    //   password: "admin123",
+    //   password: "admin1234",
     // }
      const  defaultValues = {
       id: "2025010001",
-      password: "student123",
+      password: "student1234",
     }
   const [login] = useLoginMutation();
   // console.log("data =>", data);
